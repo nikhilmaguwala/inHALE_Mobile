@@ -23,6 +23,7 @@ export const LoginScreen = (props) => {
       Alert.alert('Please Enter Password');
     } else {
       console.log('username: ', username, 'password: ', password);
+      props.navigation.navigate('Home');
     }
   };
 
