@@ -63,7 +63,7 @@ export const LoginScreen = (props) => {
           />
           <TouchableOpacity onPress={() => setIsShowPassword(!isShowPassword)}>
             <Icon
-              name={isShowPassword ? 'eye-slash' : 'eye'}
+              name={isShowPassword ? 'eye' : 'eye-slash'}
               color="#C0C0C0"
               size={20}
               style={{marginLeft: 20}}
