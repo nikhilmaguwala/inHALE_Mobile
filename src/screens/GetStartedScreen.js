@@ -6,7 +6,7 @@ export const GetStartedScreen = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <Text style={styles.headerText}>Welcome To inHALE...</Text>
+        <Text style={styles.headerText}>Welcome to inHALE...</Text>
         <Text style={styles.headerSubText}>
           Lorem ipsum dolor amet, consectetur adipiscing inet deli
         </Text>
