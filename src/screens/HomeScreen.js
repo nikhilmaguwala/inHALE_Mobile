@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
+  FlatList,
 } from 'react-native';
 import {color, fonts, hp, wp} from '../helpers/themeHelper';
 import Icon from 'react-native-vector-icons/Feather';
@@ -14,6 +15,41 @@ import {ShortNameImage, capitalize} from '../helpers/helperFuntions';
 
 export const HomeScreen = (props) => {
   const [searchWord, setSearchWord] = useState('');
+  const [patientList, setPatientList] = useState(Patients);
+
+  const renderItem = ({item}) => {
+    return (
+      <View
+        style={{
+          width: wp(90),
+          paddingVertical: 15,
+          marginVertical: 10,
+          paddingHorizontal: 20,
+          backgroundColor: item.gender === 'Male' ? '#EDF1FA' : '#FAF2EA',
+          borderRadius: 10,
+          flexDirection: 'row',
+        }}>
+        <ShortNameImage fullName={item.name} gender={item.gender} />
+        <View style={{marginLeft: 20, justifyContent: 'center'}}>
+          <Text
+            style={{
+              color: '#1E1C61',
+              fontSize: 16,
+              fontWeight: 'bold',
+              fontFamily: fonts.inHaleFont,
+            }}>
+            {capitalize(item.name)}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+  const onChangeText = (name) => {
+    setSearchWord(name);
+    setPatientList(
+      Patients.filter((i) => i.name.toLowerCase().match(name.toLowerCase())),
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -21,7 +57,7 @@ export const HomeScreen = (props) => {
           <Icon name="log-out" color="#292685" size={30} />
         </TouchableOpacity>
         <Text style={styles.headerText}>inHALE</Text>
-        <TouchableOpacity onPress={() => console.log('Profile')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Profile')}>
           <Image
             source={require('./../assets/profile.png')}
             style={{height: wp(11), width: wp(11)}}
@@ -36,7 +72,7 @@ export const HomeScreen = (props) => {
           value={searchWord}
           autoCapitalize="none"
           style={styles.search}
-          onChangeText={(txt) => setSearchWord(txt)}
+          onChangeText={(txt) => onChangeText(txt)}
         />
         <TouchableOpacity onPress={() => console.log('search')}>
           <View style={styles.searchContainer}>
@@ -44,34 +80,13 @@ export const HomeScreen = (props) => {
           </View>
         </TouchableOpacity>
       </View>
+
       <View style={{marginTop: 30}}>
-        {Patients.map((p) => {
-          return (
-            <View
-              style={{
-                width: wp(90),
-                paddingVertical: 15,
-                marginVertical: 10,
-                paddingHorizontal: 20,
-                backgroundColor: p.gender === 'Male' ? '#EDF1FA' : '#FAF2EA',
-                borderRadius: 10,
-                flexDirection: 'row',
-              }}>
-              <ShortNameImage fullName={p.name} gender={p.gender} />
-              <View style={{marginLeft: 20, justifyContent: 'center'}}>
-                <Text
-                  style={{
-                    color: '#1E1C61',
-                    fontSize: 16,
-                    fontWeight: 'bold',
-                    fontFamily: fonts.inHaleFont,
-                  }}>
-                  {capitalize(p.name)}
-                </Text>
-              </View>
-            </View>
-          );
-        })}
+        <FlatList
+          data={patientList}
+          renderItem={renderItem}
+          keyExtractor={(item) => item?.id}
+        />
       </View>
     </View>
   );
