@@ -34,4 +34,25 @@ export const Patients = [
     phoneNumber: 6543210987,
     gender: 'Male',
   },
+  {
+    id: 6,
+    name: 'Marsel Morgan',
+    age: 37,
+    phoneNumber: 6543210987,
+    gender: 'Male',
+  },
+  {
+    id: 7,
+    name: 'Alexa Hobart',
+    age: 26,
+    phoneNumber: 6543210987,
+    gender: 'Female',
+  },
+  {
+    id: 8,
+    name: 'Lium Martorell',
+    age: 21,
+    phoneNumber: 6543210987,
+    gender: 'Male',
+  },
 ];
