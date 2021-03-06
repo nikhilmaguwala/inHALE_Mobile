@@ -10,11 +10,14 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {color, wp, hp, fonts} from '../helpers/themeHelper';
+import {useDispatch} from 'react-redux';
+import {login} from '../Redux/Actions/AuthAction';
 
 export const LoginScreen = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const onSubmit = () => {
     if (username === '') {
@@ -22,8 +25,14 @@ export const LoginScreen = (props) => {
     } else if (password === '') {
       Alert.alert('Please Enter Password');
     } else {
-      console.log('username: ', username, 'password: ', password);
-      props.navigation.navigate('Home');
+      dispatch(login({email: username, password}))
+        .then((res) => {
+          console.log(res);
+          props?.navigation?.navigate('Home');
+        })
+        .catch(() => {
+          Alert.alert('Unable to login');
+        });
     }
   };
 
@@ -39,7 +48,7 @@ export const LoginScreen = (props) => {
             style={{marginRight: 20}}
           />
           <TextInput
-            placeholder="Enter Your Username"
+            placeholder="Enter Your Email"
             placeholderTextColor="#C0C0C0"
             autoCapitalize="none"
             value={username}

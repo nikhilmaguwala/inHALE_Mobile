@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {LoginScreen} from './screens/LoginScreen';
 import {GetStartedScreen} from './screens/GetStartedScreen';
 import {HomeScreen} from './screens/HomeScreen';
-import { doctorProfilePage } from "./screens/doctorProfilePage";
+import {DoctorProfilePage} from './screens/doctorProfilePage';
 
 const Stack = createStackNavigator();
 
@@ -30,7 +30,7 @@ const MainStackNavigator = () => {
         />
         <Stack.Screen
           name="Profile"
-          component={doctorProfilePage}
+          component={DoctorProfilePage}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

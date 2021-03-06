@@ -1,8 +1,16 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {color, wp, hp, fonts} from '../helpers/themeHelper';
+import {useSelector} from 'react-redux';
 
 export const GetStartedScreen = (props) => {
+  const authToken = useSelector((state) => state.user.authToken);
+  const navigate = () => {
+    if (authToken !== '') {
+      return props.navigation.navigate('Home');
+    }
+    return props.navigation.navigate('Login');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -11,7 +19,7 @@ export const GetStartedScreen = (props) => {
           Lorem ipsum dolor amet, consectetur adipiscing inet deli
         </Text>
         <View style={styles.btnMainContainer}>
-          <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+          <TouchableOpacity onPress={navigate}>
             <View style={styles.btnContainer}>
               <Text style={styles.btnText}>Get Started</Text>
             </View>

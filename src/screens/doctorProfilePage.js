@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import {wp, hp, fonts} from '../helpers/themeHelper';
+import {useSelector} from 'react-redux';
 
-export const doctorProfilePage = (props) => {
+export const DoctorProfilePage = (props) => {
+  const userDetail = useSelector((state) => state.user.userDetail);
   return (
     <View style={styles.container}>
       <Image
@@ -39,7 +41,7 @@ export const doctorProfilePage = (props) => {
                 fontWeight: 'bold',
                 fontFamily: fonts.inHaleFont,
               }}>
-              Dr. Riyanka Jariwala
+              Dr. {userDetail?.firstName} {userDetail?.lastName}
             </Text>
             <Text
               style={{
@@ -49,7 +51,7 @@ export const doctorProfilePage = (props) => {
                 fontFamily: fonts.inHaleFont,
                 marginTop: 10,
               }}>
-              Heart Surgeon - Flower Hospitals
+              Heart Surgeon - {userDetail?.clinicName}
             </Text>
           </View>
         </View>
