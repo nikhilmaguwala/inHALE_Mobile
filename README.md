@@ -40,10 +40,17 @@ yarn start
 react-native run-ios
 ```
 
-For production environments...
+For Node JS API...
 
 ```sh
-cd API-inhale
+cd API-inHALE
 npm i
 npm start
 ```
+
+## inHALE API Repo
+[inHALE](https://github.com/nikhilmaguwala/inHALE_Mobile)
+
+## inHALE API Repo
+[API-inHALE](https://github.com/nikhilmaguwala/API-inHALE)
+
