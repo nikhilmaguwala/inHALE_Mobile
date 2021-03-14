@@ -1,4 +1,4 @@
-import {USER_DETAIL, AUTH_TOKEN} from '../Types';
+import {USER_DETAIL, AUTH_TOKEN, LOG_OUT} from '../Types';
 import axios from 'axios';
 
 let reqHeader = Object.assign({
@@ -28,5 +28,18 @@ export const login = (userData) => {
       .catch((e) => {
         return Promise.reject(e);
       });
+  };
+};
+
+export const logout = () => {
+  return (dispatch) => {
+    try {
+      dispatch({
+        type: LOG_OUT,
+      });
+      return Promise.resolve();
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 };

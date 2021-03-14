@@ -7,15 +7,27 @@ import {
   TextInput,
   Text,
   FlatList,
+  Alert,
 } from 'react-native';
 import {color, fonts, hp, wp} from '../helpers/themeHelper';
 import Icon from 'react-native-vector-icons/Feather';
 import {Patients} from '../dummyContent/Patients';
 import {ShortNameImage, capitalize} from '../helpers/helperFuntions';
+import {AddPatientModal} from '../components/AddPatientModal';
+import {useDispatch} from 'react-redux';
+import {logout} from '../Redux/Actions/AuthAction';
 
 export const HomeScreen = (props) => {
   const [searchWord, setSearchWord] = useState('');
   const [patientList, setPatientList] = useState(Patients);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const dispatch = useDispatch();
+
+  const doLogout = () => {
+    dispatch(logout())
+      .then(() => props.navigation.navigate('Login'))
+      .catch(() => Alert.alert('Unable to Logout'));
+  };
 
   const renderItem = ({item}) => {
     return (
@@ -53,7 +65,7 @@ export const HomeScreen = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => props.navigation.goBack()}>
+        <TouchableOpacity onPress={doLogout}>
           <Icon name="log-out" color="#292685" size={30} />
         </TouchableOpacity>
         <Text style={styles.headerText}>inHALE</Text>
@@ -88,6 +100,19 @@ export const HomeScreen = (props) => {
           keyExtractor={(item) => item?.id}
         />
       </View>
+      <View style={styles.floatingMenuButtonStyle}>
+        <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+          <View style={styles.addButtonContainer}>
+            <Icon name={'plus'} color="#FFFFFF" size={20} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <AddPatientModal
+        visible={isModalVisible}
+        closeModal={() => {
+          setIsModalVisible(false);
+        }}
+      />
     </View>
   );
 };
@@ -123,6 +148,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  addButtonContainer: {
+    marginLeft: 10,
+    height: wp(15),
+    width: wp(15),
+    backgroundColor: '#4B7FFB',
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  floatingMenuButtonStyle: {
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+    zIndex: 999,
   },
   search: {
     flex: 1,

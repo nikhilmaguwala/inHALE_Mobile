@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 export const GetStartedScreen = (props) => {
   const authToken = useSelector((state) => state.user.authToken);
   const navigate = () => {
-    if (authToken !== '') {
+    if (authToken !== null) {
       return props.navigation.navigate('Home');
     }
     return props.navigation.navigate('Login');
