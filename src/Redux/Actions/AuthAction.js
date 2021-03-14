@@ -1,4 +1,4 @@
-import {USER_DETAIL, AUTH_TOKEN, LOG_OUT} from '../Types';
+import {USER_DETAIL, AUTH_TOKEN, RESET_STORE} from '../Types';
 import axios from 'axios';
 
 let reqHeader = Object.assign({
@@ -33,13 +33,14 @@ export const login = (userData) => {
 
 export const logout = () => {
   return (dispatch) => {
-    try {
-      dispatch({
-        type: LOG_OUT,
-      });
-      return Promise.resolve();
-    } catch (e) {
-      return Promise.reject(e);
-    }
+    setTimeout(() => {
+      dispatch(
+        {
+          type: RESET_STORE,
+        },
+        1000,
+      );
+    });
+    return Promise.resolve(true);
   };
 };

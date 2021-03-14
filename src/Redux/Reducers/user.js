@@ -1,6 +1,6 @@
 import {USER_DETAIL, AUTH_TOKEN, LOG_OUT} from '../Types';
 
-const initialState = {
+export const initialState = {
   userDetail: {},
   authToken: null,
 };
@@ -17,12 +17,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         authToken: action.payload,
-      };
-    }
-    case LOG_OUT: {
-      return {
-        userDetail: {},
-        authToken: null,
       };
     }
     default:

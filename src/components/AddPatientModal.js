@@ -35,7 +35,7 @@ export const AddPatientModal = ({visible, closeModal}) => {
           </View>
           <View style={styles.firstNameInput}>
             <TextInput
-              placeholder="Enter Your First Name"
+              placeholder="Enter Patient's First Name"
               placeholderTextColor="#C0C0C0"
               autoCapitalize="none"
               value={firstName}
@@ -44,7 +44,7 @@ export const AddPatientModal = ({visible, closeModal}) => {
           </View>
           <View style={styles.lastNameInput}>
             <TextInput
-              placeholder="Enter Your Last Name"
+              placeholder="Enter Patient's Last Name"
               placeholderTextColor="#C0C0C0"
               autoCapitalize="none"
               value={lastName}
