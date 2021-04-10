@@ -37,7 +37,7 @@ export const ShortNameImage = (props) => {
           fontWeight: 'bold',
           fontFamily: fonts.inHaleFont,
         }}>
-        {getShortName(props.fullName)}
+        {getShortName(props.fullName).toUpperCase()}
       </Text>
     </View>
   );

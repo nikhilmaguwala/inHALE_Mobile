@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -16,12 +16,38 @@ import {ShortNameImage, capitalize} from '../helpers/helperFuntions';
 import {AddPatientModal} from '../components/AddPatientModal';
 import {useDispatch} from 'react-redux';
 import {logout} from '../Redux/Actions/AuthAction';
+import {getPatients} from '../Redux/Actions/PatientActions';
 
 export const HomeScreen = (props) => {
   const [searchWord, setSearchWord] = useState('');
+  const [noPatient, setNoPatient] = useState(false);
   const [patientList, setPatientList] = useState(Patients);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPatients())
+      .then((res) => {
+        if (res.length !== 0) {
+          const patient = [];
+          res.map((i) => {
+            patient.push({
+              id: i._id,
+              name: i.firstName + ' ' + i.lastName,
+              age: 20,
+              phoneNumber: i.phoneNo,
+              gender: i.gender,
+            });
+          });
+          setPatientList(patient);
+        } else {
+          setPatientList(true);
+        }
+      })
+      .catch(() => {
+        Alert.alert('Unable to Fetch patients');
+      });
+  }, []);
 
   const doLogout = () => {
     dispatch(logout())
