@@ -20,9 +20,7 @@
 > looking like it's been marked up with tags
 > or formatting instructions.
 
-## HackBash
-
-Team Name: Angry4
+## Developers
 
 - [Nikhil Maguwala](https://www.linkedin.com/in/nikhil-maguwala/)
 - [Kushal Mehta](https://www.linkedin.com/in/kushal-mehta-a94062149/)
