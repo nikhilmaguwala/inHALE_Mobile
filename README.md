@@ -25,6 +25,7 @@
 - [Nikhil Maguwala](https://www.linkedin.com/in/nikhil-maguwala/)
 - [Kushal Mehta](https://www.linkedin.com/in/kushal-mehta-a94062149/)
 - [Riyanka Jariwala](https://www.linkedin.com/in/riyanka-jariwala-452a28150/)
+- [Keyur Vadodariya](https://www.linkedin.com/in/keyur-vadodariya)
 
 ## Installation
 
