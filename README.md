@@ -1,9 +1,9 @@
 # inHALE Project
 ## Brief Info About Project:
 
-Current Scenario:- Respiratory diseases are the leading causes of death and disability in the world. About 65 million people suffer from chronic obstructive pulmonary disease (COPD), pneumonia, asthma and around 3 million dies from it each year, making it the third leading cause of death worldwide. 
-Reasons for it:- As we have known that stethoscopes used by physicians haven't changed much over a century. They are mainly used for diagnosing diseases related to Respiration. Moreover, the physicians have to depend solely on the sense of human hearing which has its own limitation. Humans can hear only some specific range of frequencies and so can get less information which can account for an error in diagnosis. 
-Our approach:- To overcome this we are going to take the help of "Machine Learning" which will be given respiratory audios as input which in then turn, will give probabilistic output for various diseases which then further will be combined with the additional details like symptoms and other key factors to make the final prediction. In this way, the application would act as a helping hand to the physicians for early diagnosis and quick treatment, and hence lives can be saved.
+- Current Scenario:- Respiratory diseases are the leading causes of death and disability in the world. About 65 million people suffer from chronic obstructive pulmonary disease (COPD), pneumonia, asthma and around 3 million dies from it each year, making it the third leading cause of death worldwide. 
+- Reasons for it:- As we have known that stethoscopes used by physicians haven't changed much over a century. They are mainly used for diagnosing diseases related to Respiration. Moreover, the physicians have to depend solely on the sense of human hearing which has its own limitation. Humans can hear only some specific range of frequencies and so can get less information which can account for an error in diagnosis. 
+- Our approach:- To overcome this we are going to take the help of "Machine Learning" which will be given respiratory audios as input which in then turn, will give probabilistic output for various diseases which then further will be combined with the additional details like symptoms and other key factors to make the final prediction. In this way, the application would act as a helping hand to the physicians for early diagnosis and quick treatment, and hence lives can be saved.
 
 ## Tech Stack
 
