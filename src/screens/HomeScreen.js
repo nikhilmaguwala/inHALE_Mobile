@@ -11,21 +11,28 @@ import {
 } from 'react-native';
 import {color, fonts, hp, wp} from '../helpers/themeHelper';
 import Icon from 'react-native-vector-icons/Feather';
-import {Patients} from '../dummyContent/Patients';
 import {ShortNameImage, capitalize} from '../helpers/helperFuntions';
 import {AddPatientModal} from '../components/AddPatientModal';
 import {useDispatch} from 'react-redux';
 import {logout} from '../Redux/Actions/AuthAction';
-import {getPatients} from '../Redux/Actions/PatientActions';
+import {addPatient, getPatients} from '../Redux/Actions/PatientActions';
+import {PatientDetail} from '../components/PatientDetailModal';
 
 export const HomeScreen = (props) => {
   const [searchWord, setSearchWord] = useState('');
   const [noPatient, setNoPatient] = useState(false);
-  const [patientList, setPatientList] = useState(Patients);
+  const [patientList, setPatientList] = useState([]);
+  const [patient, setPatients] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
+  const [modalPatient, setModalPatient] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    fetchPatients();
+  }, []);
+
+  const fetchPatients = () => {
     dispatch(getPatients())
       .then((res) => {
         if (res.length !== 0) {
@@ -40,14 +47,15 @@ export const HomeScreen = (props) => {
             });
           });
           setPatientList(patient);
+          setPatients(patient);
         } else {
-          setPatientList(true);
+          setNoPatient(true);
         }
       })
       .catch(() => {
         Alert.alert('Unable to Fetch patients');
       });
-  }, []);
+  };
 
   const doLogout = () => {
     dispatch(logout())
@@ -55,37 +63,59 @@ export const HomeScreen = (props) => {
       .catch(() => Alert.alert('Unable to Logout'));
   };
 
+  const onSubmit = (data) => {
+    dispatch(addPatient(data))
+      .then((res) => {
+        fetchPatients();
+        return;
+      })
+      .catch(() => {
+        Alert.alert('Patient Already exist with this Phone no.');
+      });
+  };
+
   const renderItem = ({item}) => {
     return (
-      <View
-        style={{
-          width: wp(90),
-          paddingVertical: 15,
-          marginVertical: 10,
-          paddingHorizontal: 20,
-          backgroundColor: item.gender === 'Male' ? '#EDF1FA' : '#FAF2EA',
-          borderRadius: 10,
-          flexDirection: 'row',
+      <TouchableOpacity
+        onPress={() => {
+          setModalPatient(item);
+          setIsDetailModalVisible(true);
         }}>
-        <ShortNameImage fullName={item.name} gender={item.gender} />
-        <View style={{marginLeft: 20, justifyContent: 'center'}}>
-          <Text
-            style={{
-              color: '#1E1C61',
-              fontSize: 16,
-              fontWeight: 'bold',
-              fontFamily: fonts.inHaleFont,
-            }}>
-            {capitalize(item.name)}
-          </Text>
+        <View
+          style={{
+            width: wp(90),
+            paddingVertical: 15,
+            marginVertical: 10,
+            paddingHorizontal: 20,
+            backgroundColor: item.gender === 'Male' ? '#EDF1FA' : '#FAF2EA',
+            borderRadius: 10,
+            flexDirection: 'row',
+          }}>
+          <ShortNameImage fullName={item.name} gender={item.gender} />
+          <View style={{marginLeft: 20, justifyContent: 'center'}}>
+            <Text
+              style={{
+                color: '#1E1C61',
+                fontSize: 16,
+                fontWeight: 'bold',
+                fontFamily: fonts.inHaleFont,
+              }}>
+              {capitalize(item.name)}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   const onChangeText = (name) => {
     setSearchWord(name);
     setPatientList(
-      Patients.filter((i) => i.name.toLowerCase().match(name.toLowerCase())),
+      patient.filter((i) => {
+        return (
+          i.name.toLowerCase().match(name.toLowerCase()) ||
+          i.phoneNumber.match(name)
+        );
+      }),
     );
   };
   return (
@@ -138,6 +168,15 @@ export const HomeScreen = (props) => {
         closeModal={() => {
           setIsModalVisible(false);
         }}
+        onAdd={onSubmit}
+      />
+      <PatientDetail
+        closeModal={() => {
+          setModalPatient();
+          setIsDetailModalVisible(false);
+        }}
+        patient={modalPatient}
+        visible={isDetailModalVisible}
       />
     </View>
   );

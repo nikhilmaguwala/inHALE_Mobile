@@ -5,6 +5,10 @@ import {useSelector} from 'react-redux';
 
 export const DoctorProfilePage = (props) => {
   const userDetail = useSelector((state) => state.user.userDetail);
+  const url =
+    userDetail?.gender === 'Female'
+      ? require('./../assets/femaleDoctor.png')
+      : require('./../assets/maleDoctor.png');
   return (
     <View style={styles.container}>
       <Image
@@ -29,7 +33,7 @@ export const DoctorProfilePage = (props) => {
             paddingHorizontal: wp(8),
           }}>
           <Image
-            source={require('./../assets/femaleDoctor.png')}
+            source={url}
             style={{width: wp(23.5), height: hp(13)}}
             resizeMode="contain"
           />

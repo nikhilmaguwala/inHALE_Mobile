@@ -11,11 +11,10 @@ import {
 import {color, fonts, hp, wp} from '../helpers/themeHelper';
 import Icon from 'react-native-vector-icons/Feather';
 
-export const AddPatientModal = ({visible, closeModal}) => {
+export const AddPatientModal = ({visible, closeModal, onAdd}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
-  const [gender, setGender] = useState('');
   const [isGender, setIsGender] = useState([
     {id: 1, value: true, name: 'Male', selected: false},
     {id: 2, value: false, name: 'Female', selected: false},
@@ -49,6 +48,17 @@ export const AddPatientModal = ({visible, closeModal}) => {
     setIsGender(updatedState);
   };
 
+  const onClose = () => {
+    setPhoneNo('');
+    setFirstName('');
+    setLastName('');
+    setIsGender([
+      {id: 1, value: true, name: 'Male', selected: false},
+      {id: 2, value: false, name: 'Female', selected: false},
+    ]);
+    closeModal();
+  };
+
   const onSubmit = () => {
     const result = isGender.find((obj) => {
       return obj.selected === true;
@@ -62,12 +72,18 @@ export const AddPatientModal = ({visible, closeModal}) => {
     } else if (!result) {
       Alert.alert('Please Select Gender');
     } else {
-      console.log(firstName, lastName, phoneNo, result.name);
+      onAdd({
+        firstName: firstName,
+        lastName: lastName,
+        gender: result.name,
+        phoneNo: phoneNo,
+      });
+      onClose();
     }
   };
 
   return (
-    <Modal visible={visible} transparent={true}>
+    <Modal visible={visible} transparent={true} animationType="fade">
       <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.8)'}}>
         <View
           style={{
@@ -80,7 +96,7 @@ export const AddPatientModal = ({visible, closeModal}) => {
             flex: 1,
           }}>
           <View style={styles.floatingMenuButtonStyle}>
-            <TouchableOpacity onPress={closeModal}>
+            <TouchableOpacity onPress={onClose}>
               <View style={styles.addButtonContainer}>
                 <Icon name={'x'} color="#FFFFFF" size={12} />
               </View>
