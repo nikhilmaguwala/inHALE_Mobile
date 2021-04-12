@@ -68,7 +68,9 @@ export const HomeScreen = (props) => {
 
   const doLogout = () => {
     dispatch(logout())
-      .then(() => props.navigation.navigate('Login'))
+      .then(() => {
+        setPatients([]);
+        props.navigation.navigate('Login')})
       .catch(() => Alert.alert('Unable to Logout'));
   };
 

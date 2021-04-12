@@ -20,33 +20,32 @@ export const PatientDetail = ({visible, closeModal, patient, onStart}) => {
   const [cases, setCases] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    getCases();
+  }, [patient]);
+  const getCases = () => {
     if (patient) {
       dispatch(getCaseHistory(patient?.id.toString()))
         .then((res) => {
-          if (res.length > 0) {
-            setCases(res);
-          }
+          setCases(res);
+          setIsLoading(false);
         })
         .catch((e) => {
-          console.log('Unable to get Patient History');
-        })
-        .finally(() => {
+          setCases([]);
           setIsLoading(false);
         });
     }
-  }, [patient]);
+  };
   const getDate = (dateStr) => moment(dateStr).format('D');
   const getMonth = (dateStr) => moment(dateStr).format('MMM').toUpperCase();
   const renderCase = ({item}) => {
-    console.log(item);
     return (
       <View
         style={{
           width: wp(75),
-          marginTop: 20,
+          marginTop: 10,
           alignSelf: 'center',
           paddingVertical: 15,
-          marginVertical: 10,
+          marginVertical: 5,
           paddingHorizontal: 10,
           backgroundColor: '#EDF1FA',
           borderRadius: 10,
@@ -87,11 +86,46 @@ export const PatientDetail = ({visible, closeModal, patient, onStart}) => {
               fontWeight: 'bold',
               fontFamily: fonts.inHaleFont,
             }}>
-            Tanya Sharma
+            {capitalize(item?.diagnosis)}
           </Text>
         </View>
       </View>
     );
+  };
+  const getCaseList = () => {
+    if (cases.length === 0) {
+      return (
+        <View
+          style={{
+            marginVertical: 20,
+            alignSelf: 'center',
+            flex: 1,
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              color: '#F32013',
+              fontFamily: fonts.inHaleFont,
+              fontSize: 20,
+              opacity: 0.5,
+            }}>
+            No Case History
+          </Text>
+        </View>
+      );
+    }
+    return (
+      <FlatList
+        data={cases}
+        style={{marginTop: 10}}
+        renderItem={renderCase}
+        keyExtractor={(item) => item._id}
+      />
+    );
+  };
+  const onClose = () => {
+    setCases([]);
+    closeModal();
   };
   const profileUrl =
     patient?.gender === 'Male'
@@ -111,7 +145,7 @@ export const PatientDetail = ({visible, closeModal, patient, onStart}) => {
             flex: 1,
           }}>
           <View style={styles.floatingMenuButtonStyle}>
-            <TouchableOpacity onPress={closeModal}>
+            <TouchableOpacity onPress={onClose}>
               <View style={styles.addButtonContainer}>
                 <Icon name={'x'} color="#FFFFFF" size={12} />
               </View>
@@ -153,7 +187,7 @@ export const PatientDetail = ({visible, closeModal, patient, onStart}) => {
               <Text style={[styles.text, styles.subText]}>Gender</Text>
             </View>
           </View>
-          {isLoading && (
+          {isLoading ? (
             <View style={styles.profileImage}>
               <Image
                 source={require('./../assets/appLoading.gif')}
@@ -161,12 +195,9 @@ export const PatientDetail = ({visible, closeModal, patient, onStart}) => {
                 resizeMode="contain"
               />
             </View>
+          ) : (
+            getCaseList()
           )}
-          <FlatList
-            data={cases}
-            renderItem={renderCase}
-            keyExtractor={(item) => item.id}
-          />
           <TouchableOpacity
             onPress={() => {
               onStart(patient);
@@ -174,7 +205,7 @@ export const PatientDetail = ({visible, closeModal, patient, onStart}) => {
             <View
               style={{
                 backgroundColor: '#EF716B',
-                marginVertical: 30,
+                marginVertical: 20,
                 width: wp(50),
                 height: hp(5),
                 borderRadius: 20,

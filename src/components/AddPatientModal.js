@@ -7,6 +7,7 @@ import {
   TextInput,
   Text,
   Alert,
+  Image,
 } from 'react-native';
 import {color, fonts, hp, wp} from '../helpers/themeHelper';
 import Icon from 'react-native-vector-icons/Feather';
@@ -101,6 +102,13 @@ export const AddPatientModal = ({visible, closeModal, onAdd}) => {
                 <Icon name={'x'} color="#FFFFFF" size={12} />
               </View>
             </TouchableOpacity>
+          </View>
+          <View style={styles.profileImage}>
+            <Image
+              source={require('./../assets/addUser.jpeg')}
+              style={styles.image}
+              resizeMode="center"
+            />
           </View>
           <View style={styles.firstNameInput}>
             <TextInput
@@ -204,7 +212,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   firstNameInput: {
-    marginTop: hp(10),
+    marginTop: hp(5),
     alignSelf: 'center',
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -250,5 +258,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 16,
     color: '#A9A9A9',
+  },
+  profileImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    marginTop: hp(5),
+    overflow: 'hidden',
+    alignSelf: 'center',
+  },
+  image: {
+    flex: 1,
+    height: undefined,
+    width: undefined,
   },
 });

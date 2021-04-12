@@ -27,7 +27,6 @@ export const LoginScreen = (props) => {
     } else {
       dispatch(login({email: username, password}))
         .then((res) => {
-          console.log(res);
           props?.navigation?.navigate('Home');
         })
         .catch(() => {

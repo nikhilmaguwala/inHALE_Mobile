@@ -45,7 +45,6 @@ export const getCaseHistory = (patientId) => {
         return Promise.resolve(res?.data?.data);
       })
       .catch((e) => {
-        console.log(e);
         return Promise.reject(e);
       });
   };

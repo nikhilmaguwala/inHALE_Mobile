@@ -53,6 +53,7 @@
 		290F5220F6FB3F862087013B /* libPods-inHALE.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-inHALE.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* inHALE-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "inHALE-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* inHALE-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "inHALE-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3159BBC22624B35D00A066FD /* inHALEDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = inHALEDebug.entitlements; path = inHALE/inHALEDebug.entitlements; sourceTree = "<group>"; };
 		3BD281779056E784154D16E9 /* Pods-inHALE-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inHALE-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-inHALE-tvOSTests/Pods-inHALE-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		4BAD24C3BC5F1D1B18434A7B /* Pods-inHALE-inHALETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inHALE-inHALETests.release.xcconfig"; path = "Target Support Files/Pods-inHALE-inHALETests/Pods-inHALE-inHALETests.release.xcconfig"; sourceTree = "<group>"; };
 		4E5A9EB9C33653F8415DFA69 /* Pods-inHALE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inHALE.release.xcconfig"; path = "Target Support Files/Pods-inHALE/Pods-inHALE.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +126,7 @@
 		13B07FAE1A68108700A75B9A /* inHALE */ = {
 			isa = PBXGroup;
 			children = (
+				3159BBC22624B35D00A066FD /* inHALEDebug.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -301,6 +303,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 6L3ZK54FQ6;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -726,7 +729,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = inHALE/inHALEDebug.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6L3ZK54FQ6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = inHALE/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

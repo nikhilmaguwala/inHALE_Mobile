@@ -8,6 +8,7 @@ import {HomeScreen} from './screens/HomeScreen';
 import {DoctorProfilePage} from './screens/doctorProfilePage';
 import {SplashScreen} from './screens/SplashScreen';
 import {TestScreen} from './screens/TestScreen';
+import { TestResultScreen } from "./screens/TestResultScreen";
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,11 @@ const MainStackNavigator = () => {
         <Stack.Screen
           name="Test"
           component={TestScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TestResult"
+          component={TestResultScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
