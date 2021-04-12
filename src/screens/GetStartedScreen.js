@@ -1,15 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {color, wp, hp, fonts} from '../helpers/themeHelper';
-import {useSelector} from 'react-redux';
 
 export const GetStartedScreen = (props) => {
-  const authToken = useSelector((state) => state);
-  useState(() => {
-    if (authToken.authToken !== null) {
-      return props.navigation.navigate('Home');
-    }
-  }, []);
   const navigate = () => {
     return props.navigation.navigate('Login');
   };

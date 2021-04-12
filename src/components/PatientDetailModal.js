@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Modal,
   View,
@@ -6,12 +6,93 @@ import {
   StyleSheet,
   Text,
   Image,
+  FlatList,
 } from 'react-native';
 import {color, fonts, hp, wp} from '../helpers/themeHelper';
 import Icon from 'react-native-vector-icons/Feather';
 import {capitalize} from '../helpers/helperFuntions';
+import {useDispatch} from 'react-redux';
+import {getCaseHistory} from '../Redux/Actions/PatientActions';
+import moment from 'moment';
 
-export const PatientDetail = ({visible, closeModal, patient}) => {
+export const PatientDetail = ({visible, closeModal, patient, onStart}) => {
+  const dispatch = useDispatch();
+  const [cases, setCases] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    if (patient) {
+      dispatch(getCaseHistory(patient?.id.toString()))
+        .then((res) => {
+          if (res.length > 0) {
+            setCases(res);
+          }
+        })
+        .catch((e) => {
+          console.log('Unable to get Patient History');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [patient]);
+  const getDate = (dateStr) => moment(dateStr).format('D');
+  const getMonth = (dateStr) => moment(dateStr).format('MMM').toUpperCase();
+  const renderCase = ({item}) => {
+    console.log(item);
+    return (
+      <View
+        style={{
+          width: wp(75),
+          marginTop: 20,
+          alignSelf: 'center',
+          paddingVertical: 15,
+          marginVertical: 10,
+          paddingHorizontal: 10,
+          backgroundColor: '#EDF1FA',
+          borderRadius: 10,
+          flexDirection: 'row',
+        }}>
+        <View
+          style={{
+            height: wp(15),
+            width: wp(15),
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#D8E3FF',
+            borderRadius: 10,
+          }}>
+          <Text
+            style={{
+              color: '#4B7FFB',
+              fontSize: 24,
+              fontWeight: 'bold',
+              fontFamily: fonts.inHaleFont,
+            }}>
+            {getDate(item?.createdAt)}
+          </Text>
+          <Text
+            style={{
+              color: '#4B7FFB',
+              fontSize: 17,
+              fontFamily: fonts.inHaleFont,
+            }}>
+            {getMonth(item?.createdAt)}
+          </Text>
+        </View>
+        <View style={{marginLeft: 20, justifyContent: 'center'}}>
+          <Text
+            style={{
+              color: '#1E1C61',
+              fontSize: 16,
+              fontWeight: 'bold',
+              fontFamily: fonts.inHaleFont,
+            }}>
+            Tanya Sharma
+          </Text>
+        </View>
+      </View>
+    );
+  };
   const profileUrl =
     patient?.gender === 'Male'
       ? require('./../assets/maleProfile.png')
@@ -61,7 +142,7 @@ export const PatientDetail = ({visible, closeModal, patient}) => {
                 },
               ]}>
               <Text style={[styles.text, {fontSize: 24}]}>
-                {patient?.phoneNumber.toString()}
+                {patient && patient?.phoneNumber.toString()}
               </Text>
               <Text style={[styles.text, styles.subText]}>Phone No.</Text>
             </View>
@@ -72,7 +153,24 @@ export const PatientDetail = ({visible, closeModal, patient}) => {
               <Text style={[styles.text, styles.subText]}>Gender</Text>
             </View>
           </View>
-          <TouchableOpacity onPress={() => console.log('123')}>
+          {isLoading && (
+            <View style={styles.profileImage}>
+              <Image
+                source={require('./../assets/appLoading.gif')}
+                style={styles.image}
+                resizeMode="contain"
+              />
+            </View>
+          )}
+          <FlatList
+            data={cases}
+            renderItem={renderCase}
+            keyExtractor={(item) => item.id}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              onStart(patient);
+            }}>
             <View
               style={{
                 backgroundColor: '#EF716B',
@@ -123,6 +221,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 100,
     overflow: 'hidden',
+    alignSelf: 'center',
   },
   image: {
     flex: 1,

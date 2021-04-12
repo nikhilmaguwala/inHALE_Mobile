@@ -13,7 +13,7 @@ import {color, fonts, hp, wp} from '../helpers/themeHelper';
 import Icon from 'react-native-vector-icons/Feather';
 import {ShortNameImage, capitalize} from '../helpers/helperFuntions';
 import {AddPatientModal} from '../components/AddPatientModal';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../Redux/Actions/AuthAction';
 import {addPatient, getPatients} from '../Redux/Actions/PatientActions';
 import {PatientDetail} from '../components/PatientDetailModal';
@@ -27,10 +27,19 @@ export const HomeScreen = (props) => {
   const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
   const [modalPatient, setModalPatient] = useState();
   const dispatch = useDispatch();
+  const userDetail = useSelector((state) => state?.user?.userDetail);
 
   useEffect(() => {
     fetchPatients();
   }, []);
+
+  const onStart = (testPatient) => {
+    setModalPatient();
+    setIsDetailModalVisible(false);
+    props.navigation.navigate('Test', {
+      patient: testPatient,
+    });
+  };
 
   const fetchPatients = () => {
     dispatch(getPatients())
@@ -64,7 +73,12 @@ export const HomeScreen = (props) => {
   };
 
   const onSubmit = (data) => {
-    dispatch(addPatient(data))
+    dispatch(
+      addPatient({
+        ...data,
+        doctorId: userDetail?._id.toString(),
+      }),
+    )
       .then((res) => {
         fetchPatients();
         return;
@@ -177,6 +191,7 @@ export const HomeScreen = (props) => {
         }}
         patient={modalPatient}
         visible={isDetailModalVisible}
+        onStart={onStart}
       />
     </View>
   );

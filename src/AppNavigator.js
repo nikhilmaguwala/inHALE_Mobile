@@ -6,6 +6,8 @@ import {LoginScreen} from './screens/LoginScreen';
 import {GetStartedScreen} from './screens/GetStartedScreen';
 import {HomeScreen} from './screens/HomeScreen';
 import {DoctorProfilePage} from './screens/doctorProfilePage';
+import {SplashScreen} from './screens/SplashScreen';
+import {TestScreen} from './screens/TestScreen';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +15,11 @@ const MainStackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="GetStarted"
           component={GetStartedScreen}
@@ -31,6 +38,11 @@ const MainStackNavigator = () => {
         <Stack.Screen
           name="Profile"
           component={DoctorProfilePage}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Test"
+          component={TestScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

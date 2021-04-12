@@ -42,3 +42,5 @@ export const ShortNameImage = (props) => {
     </View>
   );
 };
+
+export const getDoctorId = (state) => state?.user?.userDetail?._id.toString();

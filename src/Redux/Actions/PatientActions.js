@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+import {getDoctorId} from '../../helpers/helperFuntions';
 
 let reqHeader = Object.assign({
   Accept: 'application/json',
@@ -6,9 +7,10 @@ let reqHeader = Object.assign({
 });
 
 export const getPatients = () => {
-  return () => {
+  return (dispatch, state) => {
+    const token = getDoctorId(state());
     return axios
-      .get('http://127.0.0.1:3000/api/patients/', reqHeader)
+      .get(`http://127.0.0.1:3000/api/patients/${token}`, reqHeader)
       .then((res) => {
         return Promise.resolve(res?.data?.data);
       })
@@ -26,6 +28,24 @@ export const addPatient = (data) => {
         return Promise.resolve(res?.data?.data);
       })
       .catch((e) => {
+        return Promise.reject(e);
+      });
+  };
+};
+
+export const getCaseHistory = (patientId) => {
+  return (dispatch, state) => {
+    const doctorId = getDoctorId(state());
+    return axios
+      .get(
+        `http://127.0.0.1:3000/api/case/get-case?doctorId=${doctorId}&patientId=${patientId}`,
+        reqHeader,
+      )
+      .then((res) => {
+        return Promise.resolve(res?.data?.data);
+      })
+      .catch((e) => {
+        console.log(e);
         return Promise.reject(e);
       });
   };
