@@ -9,7 +9,7 @@ let reqHeader = Object.assign({
 export const predictResult = (resultNo) => {
   return () => {
     return axios
-      .get(`http://127.0.0.1:3000/api/inhale/predict/${resultNo}`, reqHeader)
+      .get(`http://192.168.0.105:3000/api/inhale/predict/${resultNo}`, reqHeader)
       .then((res) => {
         return Promise.resolve(res?.data?.data);
       })
@@ -24,7 +24,7 @@ export const addCase = (diagnosis, patientId) => {
     const doctorId = getDoctorId(state());
     return axios
       .post(
-        'http://127.0.0.1:3000/api/case/add-case',
+        'http://192.168.0.105:3000/api/case/add-case',
         {
           patientId,
           diagnosis,

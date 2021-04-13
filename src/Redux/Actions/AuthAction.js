@@ -9,7 +9,7 @@ let reqHeader = Object.assign({
 export const login = (userData) => {
   return (dispatch) => {
     return axios
-      .post('http://127.0.0.1:3000/api/doctor/login', userData, reqHeader)
+      .post('http://192.168.0.105:3000/api/doctor/login', userData, reqHeader)
       .then((res) => {
         if (res?.data?.status === 1) {
           dispatch({

@@ -192,7 +192,7 @@ export const TestResultScreen = (props) => {
                       ? '#009944'
                       : '#cf000f',
                 }}>
-                {getResult(result.classification)}
+                {getResult(result.classification)} ({result.classification[getResult(result.classification)]}%)
               </Text>
             </View>
             <TouchableOpacity

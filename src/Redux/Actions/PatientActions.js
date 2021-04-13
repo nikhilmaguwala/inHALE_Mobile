@@ -10,7 +10,7 @@ export const getPatients = () => {
   return (dispatch, state) => {
     const token = getDoctorId(state());
     return axios
-      .get(`http://127.0.0.1:3000/api/patients/${token}`, reqHeader)
+      .get(`http://192.168.0.105:3000/api/patients/${token}`, reqHeader)
       .then((res) => {
         return Promise.resolve(res?.data?.data);
       })
@@ -23,7 +23,11 @@ export const getPatients = () => {
 export const addPatient = (data) => {
   return () => {
     return axios
-      .post('http://127.0.0.1:3000/api/patients/add-patient', data, reqHeader)
+      .post(
+        'http://192.168.0.105:3000/api/patients/add-patient',
+        data,
+        reqHeader,
+      )
       .then((res) => {
         return Promise.resolve(res?.data?.data);
       })
@@ -38,7 +42,7 @@ export const getCaseHistory = (patientId) => {
     const doctorId = getDoctorId(state());
     return axios
       .get(
-        `http://127.0.0.1:3000/api/case/get-case?doctorId=${doctorId}&patientId=${patientId}`,
+        `http://192.168.0.105:3000/api/case/get-case?doctorId=${doctorId}&patientId=${patientId}`,
         reqHeader,
       )
       .then((res) => {
